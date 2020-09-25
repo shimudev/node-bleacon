@@ -1,6 +1,5 @@
 var crypto = require('crypto');
 
-var bignum = require('bignum');
 var debug = require('debug')('estimote');
 
 var NobleDevice = require('noble-device');
@@ -81,7 +80,7 @@ Estimote.prototype.pair = function(callback) {
   var exp = Math.round(Math.random() * 0xffffffff);
   var mod = 0xfffffffb;
 
-  var sec = bignum(base).powm(exp, mod);
+  var sec = BigInt(base).powm(exp, mod);
 
   this.writeAuthService1(sec, function(error) {
     if (error) {
@@ -94,7 +93,7 @@ Estimote.prototype.pair = function(callback) {
       }
 
 
-      sec = bignum(authService1Value).powm(exp, mod);
+      sec = BigInt(authService1Value).powm(exp, mod);
 
       var authService2Data = new Buffer(16);
 
